@@ -1,25 +1,26 @@
 module( "core.Controller" );
 
+var ControllerTest = false;
+
 test( "commandIsAdded", 1, function() {
-    var command = {
-        execute: function() {}
-    };
+    var TestCommand = Command.extend({
+        execute: function( event ) {}
+    });
     
-    Controller.bind( "eventType", command );
+    Controller.bind( "eventType", TestCommand );
     
-    strictEqual( Controller.getCommandsByEventType( "eventType" )[ 0 ], command, "command is added" );
+    strictEqual( Controller.getCommandsByEventType( "eventType" )[ 0 ], TestCommand, "command is added" );
 });
 
 test( "commandIsExecuted", 1, function() {
-    var command = {
-        isSet: false,
+    var TestCommand = Command.extend({
         execute: function( event ) {
-            this.isSet = true;
+            ControllerTest = true;
         }
-    };
+    });
     
-    Controller.bind( "eventType", command );
+    Controller.bind( "eventType", TestCommand );
     Event.trigger( "eventType" );
     
-    ok( command.isSet, "command is executed" );
+    ok( ControllerTest, "command is executed" );
 });

@@ -41,7 +41,8 @@ var Controller = Class.extend({
         var commands = Controller.getCommandsByEventType( event.type );
         
         for( var i in commands ) {
-            commands[ i ].execute.apply( commands[ i ], [ event ]);
+            var command = new commands[ i ];
+            command.execute.apply( command, [ event ]);
         }
     }
     

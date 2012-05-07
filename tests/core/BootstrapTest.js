@@ -1,20 +1,21 @@
 module( "core.Bootstrap" );
 
+var BootstrapTest = false;
+
 test( "bootsrapIsInitialized", 2, function() {
-    var command = {
-        isSet: false,
+    var TestCommand = Command.extend({
         execute: function( event ) {
-            this.isSet = true;
+            BootstrapTest = true;
         }
-    };
-    var application = Bootstrap.extend({
+    });
+    var Application = Bootstrap.extend({
         addCommands: function() {
-           Controller.bind( Bootstrap.STARTUP, command );
+           Controller.bind( Bootstrap.STARTUP, TestCommand );
         }
     });
     
-    var app = new application();
+    var app = new Application();
     
     ok( app.initialized, "bootstrap.initialized is set to true" );
-    ok( command.isSet, "bootstrap triggered startup" );
+    ok( BootstrapTest, "bootstrap triggered startup" );
 });
