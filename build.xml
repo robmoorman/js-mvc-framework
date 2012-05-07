@@ -1,0 +1,62 @@
+<project name="build" basedir="." default="default">
+	
+	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="./build/compiler.jar" />
+	
+	<target name="default">
+		<antcall target="prepare" />
+		<antcall target="coverage" />
+		<antcall target="run" />
+		<antcall target="compress" />
+	</target>
+	
+	<target name="prepare">
+		<exec executable="/Users/rmoorman/Developer/phantomjs" failonerror="true">
+			<arg line="./coverage/coverage.js" />
+			<arg line="prepare" />
+			<arg line="--config ./coverage/config.js" />
+		</exec>
+	</target>
+	
+	<target name="coverage">
+		<exec executable="/Users/rmoorman/Developer/jscoverage" failonerror="true">
+			<arg line="./coverage/build-tmp/src" />
+			<arg line="./coverage/build-tmp/bin" />
+		</exec>
+	</target>
+	
+	<target name="run">
+		<exec executable="/Users/rmoorman/Developer/phantomjs" failonerror="true">
+			<arg line="./coverage/coverage.js" />
+			<arg line="run" />
+			<arg line="--config ./coverage/config.js" />
+		</exec>
+	</target>
+	
+	<target name="compress">
+		<delete>
+			<fileset dir="./bin" includes="js.mvc.min.js" />
+		</delete>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="./bin/js.mvc.min.js">
+			<sources dir="./libs">
+				<file name="class.js" />
+				<file name="jquery-1.7.2.min.js" />
+				<file name="jquery.history.js" />
+			</sources>
+			<sources dir="./src/core">
+				<file name="Bootstrap.js" />
+				<file name="Controller.js" />
+				<file name="Event.js" />
+				<file name="Model.js" />
+				<file name="Router.js" />
+				<file name="View.js" />
+			</sources>
+			<sources dir="./src/patterns">
+				<file name="Command.js" />
+				<file name="Mediator.js" />
+				<file name="Proxy.js" />
+				<file name="Service.js" />
+			</sources>
+		</jscomp>
+	</target>
+	
+</project>
