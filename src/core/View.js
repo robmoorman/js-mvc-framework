@@ -8,7 +8,7 @@ var View = Class.extend({
     
     addMediator: function( mediator ) {
         if( this.hasMediator( mediator.getName())) {
-            throw "Mediator already under the name " + mediator.getName();
+            throw "Mediator already added under the name " + mediator.getName();
         }
         
         this._mediatorMap[ mediator.getName() ] = mediator;

@@ -5,15 +5,8 @@ module( "core.View", {
 });
 
 var TestMediator = Mediator.extend({
-    isAdded: false,
     init: function( name, element ) {
         this._super( name, element );
-    },
-    added: function() {
-        this.isAdded = true;
-    },
-    removed: function() {
-        this.isAdded = false;
     }
 });
 
@@ -23,7 +16,7 @@ test( "mediatorIsAdded", 4, function() {
     View.addMediator( mediator );
     
     ok( View.hasMediator( "testName" ), "mediator is added" );
-    ok( mediator.isAdded, "mediator added() is called" );
+    ok( mediator.isActive(), "mediator added() is called" );
     
     raises( function() {
         View.addMediator( mediator );
@@ -39,5 +32,5 @@ test( "mediatorIsRemoved", 2, function() {
     View.removeMediator( "testName" );
     
     ok( !View.hasMediator( "testName" ), "mediator is removed" );
-    ok( !mediator.isAdded, "mediator removed() is called" );
+    ok( !mediator.isActive(), "mediator removed() is called" );
 });

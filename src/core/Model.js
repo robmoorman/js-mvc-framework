@@ -9,7 +9,7 @@ var Model = Class.extend({
     
     addProxy: function( proxy ) {
         if( this.hasProxy( proxy.getName())) {
-            throw "Proxy already under the name " + proxy.getName();
+            throw "Proxy already added under the name " + proxy.getName();
         }
         
         this._proxyMap[ proxy.getName() ] = proxy;
@@ -48,7 +48,7 @@ var Model = Class.extend({
     
     addService: function( service ) {
         if( this.hasService( service.getName())) {
-            throw "Service already under the name " + service.getName();
+            throw "Service already added under the name " + service.getName();
         }
         
         this._serviceMap[ service.getName() ] = service;
