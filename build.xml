@@ -47,12 +47,14 @@
 				<file name="Controller.js" />
 				<file name="Event.js" />
 				<file name="Model.js" />
+				<file name="ModuleManager.js" />
 				<file name="Router.js" />
 				<file name="View.js" />
 			</sources>
 			<sources dir="./src/patterns">
 				<file name="Command.js" />
 				<file name="Mediator.js" />
+				<file name="Module.js" />
 				<file name="Proxy.js" />
 				<file name="Service.js" />
 			</sources>
