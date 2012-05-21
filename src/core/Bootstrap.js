@@ -1,4 +1,4 @@
-var Bootstrap = Class.extend({
+Bootstrap = Class.extend({
     
     initialized: false,
     

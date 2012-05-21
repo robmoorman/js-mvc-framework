@@ -5,11 +5,7 @@ module( "core.Router", {
 });
 
 test( "routeIsAdded", 3, function() {
-    var TestCommand = Command.extend({
-        execute: function( event ) {}
-    });
-    
-    var route = Router.add( /home/, TestCommand );
+    var route = Router.add( /home/, "eventType" );
     var length = Router.getRouteMap().length;
     
     ok( length, "route is added" );

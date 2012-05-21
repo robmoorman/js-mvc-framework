@@ -1,4 +1,4 @@
-var ModuleManager = Class.extend({
+ModuleManager = Class.extend({
     
     _moduleMap: {},
     _currentContext: null,
@@ -46,18 +46,16 @@ var ModuleManager = Class.extend({
     },
     
     trigger: function( context ) {
-        if( this._currentContext !== context ) {
-            this._currentContext = context;
-            
-            for( var i in this._moduleMap ) {
-                var module = this._moduleMap[ i ];
-            
-                if( module.validate( context ) && !module.isActive()) {
-                    module.activate();
-                }
-                else if( !module.validate( context ) && module.isActive()) {
-                    module.deactivate();
-                }
+        this._currentContext = context;
+        
+        for( var i in this._moduleMap ) {
+            var module = this._moduleMap[ i ];
+        
+            if( module.validate( context ) && !module.isActive()) {
+                module.activate();
+            }
+            else if( !module.validate( context ) && module.isActive()) {
+                module.deactivate();
             }
         }
     }

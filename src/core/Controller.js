@@ -1,4 +1,4 @@
-var Controller = Class.extend({
+Controller = Class.extend({
     
     _commandMap: [],
     

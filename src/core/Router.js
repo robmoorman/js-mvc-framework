@@ -1,4 +1,4 @@
-var Router = Class.extend({
+Router = Class.extend({
     
     getRouteMap: function() {
         return this._routeMap;

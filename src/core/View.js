@@ -1,4 +1,4 @@
-var View = Class.extend({
+View = Class.extend({
     
     _mediatorMap: {},
     

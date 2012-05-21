@@ -1,4 +1,4 @@
-var Model = Class.extend({
+Model = Class.extend({
     
     _proxyMap: {},
     _serviceMap: {},

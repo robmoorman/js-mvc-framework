@@ -5,7 +5,7 @@ var Mediator = Class.extend({
     },
     
     getElement: function() {
-        return this._data;
+        return this._element;
     },
     
     setElement: function( value ) {
@@ -27,18 +27,30 @@ var Mediator = Class.extend({
     
     activate: function() {
         this._active = true;
+        
+        this.activated();
     },
     
     deactivate: function() {
         this._active = false;
+        
+        this.deactivated();
+    },
+    
+    activated: function() {
+        
+    },
+    
+    deactivated: function() {
+        
     },
     
     added: function() {
-        this.activate();
+        
     },
     
     removed: function() {
-        this.deactivate();
+        
     }
     
 });

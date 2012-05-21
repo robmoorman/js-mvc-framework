@@ -1,4 +1,4 @@
-var Event = Class.extend({
+Event = Class.extend({
     
     _eventMap: [],
     
@@ -6,22 +6,26 @@ var Event = Class.extend({
         
     },
     
-    bind: function( eventType, callback ) {
-        var callbacks = this._eventMap[ eventType ] ? this._eventMap[ eventType ] : [];
+    bind: function( eventType, callback, context ) {
+        var name = callback.toString();
+        var callbacks = this._eventMap[ eventType ] ? this._eventMap[ eventType ] : {};
         
-        if( callbacks.indexOf( callback ) == -1 ) {
-            callbacks.push( callback );
+        if( !callbacks[ name ]) {
+            callbacks[ name ] = {
+                callback: callback,
+                context: context ? context : null
+            };
         }
         
         this._eventMap[ eventType ] = callbacks;
     },
     
     unbind: function( eventType, callback ) {
-        var callbacks = this._eventMap[ eventType ] ? this._eventMap[ eventType ] : [];
-        var index = callbacks.indexOf( callback );
+        var name = callback.toString();
+        var callbacks = this._eventMap[ eventType ] ? this._eventMap[ eventType ] : {};
         
-        if( index != -1 ) {
-            callbacks.splice( index, 1 );
+        if( callbacks[ name ]) {
+            delete callbacks[ name ];
         }
         
         this._eventMap[ eventType ] = callbacks;
@@ -33,19 +37,20 @@ var Event = Class.extend({
     
     trigger: function( eventType, payload, context ) {
         var callbacks = this._eventMap[ eventType ];
-        var callbackPayload = [{ type:eventType, data:{} }];
         
         if( callbacks ) {
+            var callbackPayload = [{ type:eventType, data:{} }];
+            
             for( var i in callbacks ) {
-                callbacks[ i ].apply( context ? context : null, payload ? [{ type:eventType, data:payload }] : callbackPayload );
+                callbacks[ i ].callback.apply( context ? context : callbacks[ i ].context, payload ? [{ type:eventType, data:payload }] : callbackPayload );
             }
         }
     },
     
     willTrigger: function( eventType, callback ) {
-        var callbacks = this._eventMap[ eventType ] ? this._eventMap[ eventType ] : [];
+        var callbacks = this._eventMap[ eventType ] ? this._eventMap[ eventType ] : {};
         
-        return callbacks.indexOf( callback ) != -1;
+        return callbacks[ callback.toString() ] != null;
     }
     
 });

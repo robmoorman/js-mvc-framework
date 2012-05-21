@@ -7,6 +7,12 @@ module( "core.View", {
 var TestMediator = Mediator.extend({
     init: function( name, element ) {
         this._super( name, element );
+    },
+    added: function() {
+        this.activate();
+    },
+    removed: function() {
+        this.deactivate();
     }
 });
 
