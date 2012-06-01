@@ -59,11 +59,9 @@
 				<file name="mvc.js" />
 			</sources>
 		</jscomp>
-		<!--
 		<delete>
 			<fileset dir="./bin" includes="mvc.js" />
 		</delete>
-		-->
 	</target>
 	
 </project>
