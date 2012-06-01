@@ -36,9 +36,7 @@
 		<delete>
 			<fileset dir="./bin" includes="mvc.min.js" />
 		</delete>
-		<concat destfile="./bin/mvc.js">
-			<fileset dir="./libs" includes="jquery-1.7.2.min.js" />
-			<fileset dir="./libs" includes="jquery.history.js" />
+		<concat destfile="./bin/mvc.js" fixlastline="yes">
 			<fileset dir="./libs" includes="class.js" />
 			<fileset dir="./src/core" includes="Event.js" />
 			<fileset dir="./src/core" includes="Model.js" />
@@ -61,9 +59,11 @@
 				<file name="mvc.js" />
 			</sources>
 		</jscomp>
+		<!--
 		<delete>
 			<fileset dir="./bin" includes="mvc.js" />
 		</delete>
+		-->
 	</target>
 	
 </project>
