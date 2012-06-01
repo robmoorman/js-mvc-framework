@@ -34,31 +34,36 @@
 	
 	<target name="compress">
 		<delete>
-			<fileset dir="./bin" includes="js.mvc.min.js" />
+			<fileset dir="./bin" includes="mvc.min.js" />
 		</delete>
-		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="./bin/js.mvc.min.js">
-			<sources dir="./libs">
-				<file name="class.js" />
-				<file name="jquery-1.7.2.min.js" />
-				<file name="jquery.history.js" />
-			</sources>
-			<sources dir="./src/core">
-				<file name="Bootstrap.js" />
-				<file name="Controller.js" />
-				<file name="Event.js" />
-				<file name="Model.js" />
-				<file name="ModuleManager.js" />
-				<file name="Router.js" />
-				<file name="View.js" />
-			</sources>
-			<sources dir="./src/patterns">
-				<file name="Command.js" />
-				<file name="Mediator.js" />
-				<file name="Module.js" />
-				<file name="Proxy.js" />
-				<file name="Service.js" />
+		<concat destfile="./bin/mvc.js">
+			<fileset dir="./libs" includes="jquery-1.7.2.min.js" />
+			<fileset dir="./libs" includes="jquery.history.js" />
+			<fileset dir="./libs" includes="class.js" />
+			<fileset dir="./src/core" includes="Event.js" />
+			<fileset dir="./src/core" includes="Model.js" />
+			<fileset dir="./src/core" includes="View.js" />
+			<fileset dir="./src/core" includes="Controller.js" />
+			<fileset dir="./src/core" includes="Boostrap.js" />
+			<fileset dir="./src/core" includes="ModuleManager.js" />
+			<fileset dir="./src/core" includes="Router.js" />
+			<fileset dir="./src/patterns" includes="Proxy.js" />
+			<fileset dir="./src/patterns" includes="Service.js" />
+			<fileset dir="./src/patterns" includes="Mediator.js" />
+			<fileset dir="./src/patterns" includes="Command.js" />
+			<fileset dir="./src/patterns" includes="MacroCommand.js" />
+			<fileset dir="./src/patterns" includes="ASyncCommand.js" />
+			<fileset dir="./src/patterns" includes="ASyncMacroCommand.js" />
+			<fileset dir="./src/patterns" includes="Module.js" />
+		</concat>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="./bin/mvc.min.js">
+			<sources dir="./bin">
+				<file name="mvc.js" />
 			</sources>
 		</jscomp>
+		<delete>
+			<fileset dir="./bin" includes="mvc.js" />
+		</delete>
 	</target>
 	
 </project>

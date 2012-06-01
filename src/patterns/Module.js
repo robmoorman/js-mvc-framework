@@ -1,60 +1,64 @@
-var Module = Class.extend({
+( function() {
     
-    getName: function() {
-        return this._name;
-    },
-    
-    isActive: function() {
-        return this._active;
-    },
-    
-    _name: null,
-    _mediatorNames: [],
-    _active: false,
-    
-    init: function( name, mediatorNames ) {
-        this._name = name;
-        this._mediatorNames = mediatorNames ? mediatorNames : [];
-    },
-    
-    validate: function( context ) {
-        return false;
-    },
-    
-    activate: function() {
-        this._active = true;
+    window.Module = Class.extend({
         
-        for( var i in this._mediatorNames ) {
-            var mediatorName = this._mediatorNames[ i ];
+        getName: function() {
+            return this._name;
+        },
+        
+        isActive: function() {
+            return this._active;
+        },
+        
+        _name: null,
+        _mediatorNames: [],
+        _active: false,
+        
+        init: function( name, mediatorNames ) {
+            this._name = name;
+            this._mediatorNames = mediatorNames ? mediatorNames : [];
+        },
+        
+        validate: function( context ) {
+            return false;
+        },
+        
+        activate: function() {
+            this._active = true;
             
-            if( View.hasMediator( mediatorName )) {
-                var mediator = View.getMediator( mediatorName );
+            for( var i in this._mediatorNames ) {
+                var mediatorName = this._mediatorNames[ i ];
                 
-                if( !mediator.isActive()) {
-                    mediator.activate();
+                if( View.hasMediator( mediatorName )) {
+                    var mediator = View.getMediator( mediatorName );
+                    
+                    if( !mediator.isActive()) {
+                        mediator.activate();
+                    }
                 }
             }
-        }
-    },
-    
-    deactivate: function() {
-        this._active = false;
+        },
         
-        for( var i in this._mediatorNames ) {
-            var mediatorName = this._mediatorNames[ i ];
+        deactivate: function() {
+            this._active = false;
             
-            if( View.hasMediator( mediatorName )) {
-                var mediator = View.getMediator( mediatorName );
+            for( var i in this._mediatorNames ) {
+                var mediatorName = this._mediatorNames[ i ];
                 
-                if( mediator.isActive()) {
-                    mediator.deactivate();
+                if( View.hasMediator( mediatorName )) {
+                    var mediator = View.getMediator( mediatorName );
+                    
+                    if( mediator.isActive()) {
+                        mediator.deactivate();
+                    }
                 }
             }
+        },
+        
+        getMediatorNames: function() {
+            return this._mediatorNames;
         }
-    },
+        
+    });
     
-    getMediatorNames: function() {
-        return this._mediatorNames;
-    }
-    
-});
+})( window );

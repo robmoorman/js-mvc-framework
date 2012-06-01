@@ -1,21 +1,25 @@
-var Service = Class.extend({
+( function() {
     
-    getName: function() {
-        return this._name;
-    },
-    
-    _name: null,
-    
-    init: function( name ) {
-        this._name = name;
-    },
-    
-    added: function() {
+    window.Service = Class.extend({
         
-    },
-    
-    removed: function() {
+        getName: function() {
+            return this._name;
+        },
         
-    }
+        _name: null,
+        
+        init: function( name ) {
+            this._name = name;
+        },
+        
+        added: function() {
+            
+        },
+        
+        removed: function() {
+            
+        }
+        
+    });
     
-});
+})( window );

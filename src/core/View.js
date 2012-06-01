@@ -1,50 +1,51 @@
-View = Class.extend({
+( function() {
     
-    _mediatorMap: {},
-    
-    init: function() {
+    window.View = new ( Class.extend({
         
-    },
-    
-    addMediator: function( mediator ) {
-        if( this.hasMediator( mediator.getName())) {
-            throw "Mediator already added under the name " + mediator.getName();
-        }
+        _mediatorMap: {},
         
-        this._mediatorMap[ mediator.getName() ] = mediator;
-        
-        mediator.added();
-    },
-    
-    getMediator: function( name ) {
-        return this._mediatorMap[ name ];
-    },
-    
-    hasMediator: function( name ) {
-        return this._mediatorMap[ name ] != null;
-    },
-    
-    removeMediator: function( name ) {
-        var mediator = this.getMediator( name );
-        
-        if( mediator ) {
-            this._mediatorMap[ name ] = null;
+        init: function() {
             
-            mediator.removed();
+        },
+        
+        addMediator: function( mediator ) {
+            if( this.hasMediator( mediator.getName())) {
+                throw "Mediator already added under the name " + mediator.getName();
+            }
+            
+            this._mediatorMap[ mediator.getName() ] = mediator;
+            
+            mediator.added();
+        },
+        
+        getMediator: function( name ) {
+            return this._mediatorMap[ name ];
+        },
+        
+        hasMediator: function( name ) {
+            return this._mediatorMap[ name ] != null;
+        },
+        
+        removeMediator: function( name ) {
+            var mediator = this.getMediator( name );
+            
+            if( mediator ) {
+                mediator.removed();
+                
+                delete this._mediatorMap[ name ];
+            }
+            
+            return mediator;
+        },
+        
+        removeAllMediators: function() {
+            for( var i in this._mediatorMap ) {
+                this.removeMediator( i );
+            }
+            
+            this._mediatorMap = {};
         }
         
-        return mediator;
-    },
+    }));
     
-    removeAllMediators: function() {
-        for( var i in this._mediatorMap ) {
-            var mediator = this._mediatorMap[ i ];
-            mediator.removed();
-        }
-        
-        this._mediatorMap = {};
-    }
-    
-});
-
-var View = new View();
+})( window );

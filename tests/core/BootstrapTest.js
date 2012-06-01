@@ -9,12 +9,12 @@ test( "bootsrapIsInitialized", 2, function() {
         }
     });
     var Application = Bootstrap.extend({
-        addCommands: function() {
-           Controller.bind( Bootstrap.STARTUP, TestCommand );
+        defineController: function() {
+            Controller.bind( Bootstrap.STARTUP, TestCommand );
         }
     });
     
-    var app = new Application();
+    var app = new Application( true );
     
     ok( app.initialized, "bootstrap.initialized is set to true" );
     ok( BootstrapTest, "bootstrap triggered startup" );

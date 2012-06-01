@@ -1,51 +1,60 @@
-Controller = Class.extend({
+( function() {
     
-    _commandMap: [],
-    
-    init: function() {
+    window.Controller = new ( Class.extend({
         
-    },
-    
-    bind: function( eventType, command ) {
-        var commands = this.getCommandsByEventType( eventType );
+        _commandMap: [],
         
-        if( commands.indexOf( command ) == -1 ) {
-            Event.bind( eventType, this._onEventTriggered );
+        init: function() {
             
-            commands.push( command );
-        }
+        },
         
-        this._commandMap[ eventType ] = commands;
-    },
-    
-    unbind: function( eventType, command ) {
-        var commands = this.getCommandsByEventType( eventType );
-        var index = commands.indexOf( command );
-        
-        if( index != -1 ) {
-            commands.splice( index, 1 );
+        bind: function( eventType, command ) {
+            var commands = this.getCommandsByEventType( eventType );
             
-            if( !commands.length ) {
-                Event.unbind( eventType, this._onEventTriggered );
+            if( commands.indexOf( command ) == -1 ) {
+                Event.bind( eventType, this._onEventTriggered, this );
+                
+                commands.push( command );
+            }
+            
+            this._commandMap[ eventType ] = commands;
+        },
+        
+        unbind: function( eventType, command ) {
+            var commands = this.getCommandsByEventType( eventType );
+            var index = commands.indexOf( command );
+            
+            if( index != -1 ) {
+                commands.splice( index, 1 );
+                
+                if( !commands.length ) {
+                    Event.unbind( eventType, this._onEventTriggered );
+                }
+            }
+            
+            this._commandMap[ eventType ] = commands;
+        },
+        
+        execute: function( commandOrCommandClass, event ) {
+            var command = ( typeof commandOrCommandClass.execute == "function" ) ? commandOrCommandClass : new commandOrCommandClass;
+            
+            if( typeof command.execute == "function" ) {
+                command.execute.apply( command, [ event ]);
+            }
+        },
+        
+        getCommandsByEventType: function( eventType ) {
+            return this._commandMap[ eventType ] ? this._commandMap[ eventType ] : [];
+        },
+        
+        _onEventTriggered: function( event ) {
+            var commands = this.getCommandsByEventType( event.type );
+            
+            for( var i in commands ) {
+                this.execute( commands[ i ], event );
             }
         }
         
-        this._commandMap[ eventType ] = commands;
-    },
+    }));
     
-    getCommandsByEventType: function( eventType ) {
-        return this._commandMap[ eventType ] ? this._commandMap[ eventType ] : [];
-    },
-    
-    _onEventTriggered: function( event ) {
-        var commands = Controller.getCommandsByEventType( event.type );
-        
-        for( var i in commands ) {
-            var command = new commands[ i ];
-            command.execute.apply( command, [ event ]);
-        }
-    }
-    
-});
-
-var Controller = new Controller();
+})( window );

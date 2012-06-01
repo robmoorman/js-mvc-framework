@@ -1,65 +1,67 @@
-ModuleManager = Class.extend({
-    
-    _moduleMap: {},
-    _currentContext: null,
-    
-    init: function() {
+( function() {
+
+    window.ModuleManager = new ( Class.extend({
         
-    },
-    
-    add: function( module ) {
-        if( this.has( module.getName())) {
-            throw "Module already added under the name " + mediator.getName();
-        }
+        _moduleMap: {},
+        _currentContext: null,
         
-        this._moduleMap[ module.getName() ] = module;
-    },
-    
-    get: function( name ) {
-        return this._moduleMap[ name ];
-    },
-    
-    has: function( name ) {
-        return this._moduleMap[ name ] != null;
-    },
-    
-    remove: function( name ) {
-        var module = this.get( name );
+        init: function() {
+            
+        },
         
-        if( module ) {
-            if( module.isActive()) {
-                module.deactivate();
+        add: function( module ) {
+            if( this.has( module.getName())) {
+                throw "Module already added under the name " + mediator.getName();
             }
             
-            this._moduleMap[ name ] = null;
-        }
+            this._moduleMap[ module.getName() ] = module;
+        },
         
-        return module;
-    },
-    
-    removeAll: function() {
-        for( var i in this._moduleMap ) {
-            this.remove( i );
-        }
+        get: function( name ) {
+            return this._moduleMap[ name ];
+        },
         
-        this._moduleMap = {};
-    },
-    
-    trigger: function( context ) {
-        this._currentContext = context;
+        has: function( name ) {
+            return this._moduleMap[ name ] != null;
+        },
         
-        for( var i in this._moduleMap ) {
-            var module = this._moduleMap[ i ];
-        
-            if( module.validate( context ) && !module.isActive()) {
-                module.activate();
+        remove: function( name ) {
+            var module = this.get( name );
+            
+            if( module ) {
+                if( module.isActive()) {
+                    module.deactivate();
+                }
+                
+                this._moduleMap[ name ] = null;
             }
-            else if( !module.validate( context ) && module.isActive()) {
-                module.deactivate();
+            
+            return module;
+        },
+        
+        removeAll: function() {
+            for( var i in this._moduleMap ) {
+                this.remove( i );
+            }
+            
+            this._moduleMap = {};
+        },
+        
+        trigger: function( context ) {
+            this._currentContext = context;
+            
+            for( var i in this._moduleMap ) {
+                var module = this._moduleMap[ i ];
+                
+                if( module.validate( context ) && !module.isActive()) {
+                    module.activate();
+                }
+                else if( !module.validate( context ) && module.isActive()) {
+                    module.deactivate();
+                }
             }
         }
-    }
+        
+    }));
     
-});
-
-var ModuleManager = new ModuleManager();
+})( window );

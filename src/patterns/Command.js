@@ -1,7 +1,15 @@
-var Command = Class.extend({
+( function() {
     
-    execute: function( event ) {
+    window.Command = Class.extend({
         
-    }
-     
-});
+        init: function() {
+            
+        },
+        
+        execute: function( event ) {
+            
+        }
+        
+    });
+    
+})( window );

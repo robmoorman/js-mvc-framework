@@ -1,48 +1,33 @@
-Bootstrap = Class.extend({
+( function() {
     
-    initialized: false,
-    
-    init: function() {
-        this.addCommands();
-        this.addProxies();
-        this.addServices();
-        this.addMediators();
-        this.addRoutes();
-        this.addModules();
+    window.Bootstrap = Class.extend({
         
-        this.initialized = true;
+        initialized: function() {
+            return this._initialized;
+        },
         
-        this.startup();
-    },
-    
-    startup: function() {
-        Event.trigger( Bootstrap.STARTUP );
-    },
-    
-    addCommands: function() {
+        _initialized: false,
         
-    },
-    
-    addProxies: function(  ) {
+        init: function( autoStartup ) {
+            this.defineModel();
+            this.defineView();
+            this.defineController();
+            
+            this._initialized = true;
+            
+            if( autoStartup == undefined || autoStartup && autoStartup.toString().toLowerCase() == "true" ) {
+                this.startup();
+            }
+        },
         
-    },
-    
-    addServices: function() {
+        startup: function() {
+            Event.trigger( Bootstrap.STARTUP );
+        },
         
-    },
-    
-    addMediators: function() {
+        defineModel: function() {},
+        defineView: function() {},
+        defineController: function() {}
         
-    },
+    });
     
-    addRoutes: function() {
-        
-    },
-    
-    addModules: function() {
-        
-    }
-     
-});
-
-Bootstrap.STARTUP = "startup";
+})( window );
