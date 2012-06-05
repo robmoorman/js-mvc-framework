@@ -42,7 +42,7 @@
 			<fileset dir="./src/core" includes="Model.js" />
 			<fileset dir="./src/core" includes="View.js" />
 			<fileset dir="./src/core" includes="Controller.js" />
-			<fileset dir="./src/core" includes="Boostrap.js" />
+			<fileset dir="./src/core" includes="Bootstrap.js" />
 			<fileset dir="./src/core" includes="ModuleManager.js" />
 			<fileset dir="./src/core" includes="Router.js" />
 			<fileset dir="./src/patterns" includes="Proxy.js" />

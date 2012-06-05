@@ -74,6 +74,8 @@
                     triggered = true;
                     
                     Event.trigger( route.eventType, this._history.getState());
+                    
+                    break;
                 }
             }
             
